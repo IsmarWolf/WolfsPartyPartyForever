@@ -1,4 +1,4 @@
-# 🐺 Wolf's Party
+# Party Party Forever!!
 
 Suíte de party games multiplayer, feita para ser modular: **coloque um jogo
 na pasta `games/` e ele aparece no menu.** Sem código de sala — todo mundo
