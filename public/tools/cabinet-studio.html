@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Estúdio do Gabinete</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/studio.css" />
+</head>
+<body class="studio">
+  <header class="bar">
+    <a class="sbtn" href="../index.html">◀ JOGO</a>
+    <h1>ESTÚDIO DO GABINETE</h1>
+
+    <div class="layers" role="tablist" aria-label="Camadas">
+      <div class="layer" data-layer="base">
+        <button class="layer__pick" type="button" title="Corpo do gabinete (atrás de tudo) — tecla 1">CORPO</button>
+        <button class="layer__eye" type="button" aria-label="Mostrar/ocultar">●</button>
+      </div>
+      <div class="layer" data-layer="neon">
+        <button class="layer__pick" type="button" title="Partes que brilham no jogo — tecla 2">NEON</button>
+        <button class="layer__eye" type="button" aria-label="Mostrar/ocultar">●</button>
+      </div>
+      <div class="layer" data-layer="front">
+        <button class="layer__pick" type="button" title="Fica por cima dos controles — tecla 3">FRENTE</button>
+        <button class="layer__eye" type="button" aria-label="Mostrar/ocultar">●</button>
+      </div>
+    </div>
+
+    <div class="bar__spacer"></div>
+    <button class="sbtn" type="button" data-cmd="undo" title="Desfazer (Ctrl+Z)">↶</button>
+    <button class="sbtn" type="button" data-cmd="redo" title="Refazer (Ctrl+Y)">↷</button>
+    <details class="menu">
+      <summary class="sbtn">MAIS ▾</summary>
+      <div class="menu__list">
+        <button type="button" data-cmd="template">RECOMEÇAR DO MODELO ATUAL</button>
+        <button type="button" data-cmd="clear">LIMPAR SÓ ESTA CAMADA</button>
+        <button type="button" data-cmd="clear-all" class="danger">APAGAR O DESENHO INTEIRO</button>
+        <button type="button" data-cmd="import">IMPORTAR PNG NA CAMADA</button>
+        <button type="button" data-cmd="export-png">BAIXAR PNG (TUDO JUNTO)</button>
+        <button type="button" data-cmd="copy-json">COPIAR DESENHO (JSON)</button>
+        <button type="button" data-cmd="reset-layout">PEÇAS NO LUGAR PADRÃO</button>
+        <button type="button" data-cmd="restore" class="danger">VOLTAR AO GABINETE PADRÃO</button>
+      </div>
+    </details>
+    <button class="sbtn sbtn--go" type="button" data-cmd="save">SALVAR NO JOGO</button>
+    <a class="sbtn" href="../index.html" target="_top">VER NO JOGO ▶</a>
+    <input type="file" accept="image/png,image/*" id="file-import" hidden />
+  </header>
+
+  <aside class="tools" aria-label="Ferramentas"></aside>
+
+  <main class="viewport" id="viewport">
+    <div class="stage" id="stage">
+      <img class="ref" id="ref" alt="" hidden />
+      <canvas class="lyr" data-canvas="base"></canvas>
+      <canvas class="lyr lyr--glow" data-canvas="glow"></canvas>
+      <canvas class="lyr" data-canvas="neon"></canvas>
+      <div class="pieces" id="pieces"></div>
+      <canvas class="lyr" data-canvas="front"></canvas>
+      <img class="ref ref--top" id="ref-top" alt="" hidden />
+      <canvas class="lyr lyr--preview" data-canvas="preview"></canvas>
+      <div class="grid" id="grid"></div>
+      <div class="mirror-line" id="mirror-line"></div>
+      <div class="cursor" id="cursor"></div>
+    </div>
+  </main>
+
+  <aside class="side">
+    <section class="panel">
+      <h2>COR</h2>
+      <div class="current">
+        <span class="current__swatch" id="current-color"></span>
+        <label class="sbtn sbtn--small">+ NOVA<input type="color" id="color-input" /></label>
+      </div>
+      <div class="palette" id="palette"></div>
+    </section>
+
+    <section class="panel">
+      <h2>REFERÊNCIA</h2>
+      <p class="muted">Coloque uma imagem por baixo para copiar por cima.</p>
+      <div class="row">
+        <label class="sbtn sbtn--small">ABRIR IMAGEM<input type="file" accept="image/*" id="ref-input" hidden /></label>
+        <button class="sbtn sbtn--small" type="button" id="ref-clear">TIRAR</button>
+      </div>
+      <label class="range">TRANSPARÊNCIA <input type="range" id="ref-opacity" min="5" max="100" value="45" /></label>
+      <label class="check"><input type="checkbox" id="ref-top-toggle" /> MOSTRAR POR CIMA</label>
+    </section>
+
+    <section class="panel">
+      <h2>PEÇAS DO JOGO</h2>
+      <p class="muted">Use a ferramenta PEÇAS (V) para arrastar. Tela e letreiro aumentam pelo canto.</p>
+      <div class="piece-info" id="piece-info">nenhuma selecionada</div>
+      <label class="check"><input type="checkbox" id="auto-deco" checked /> DECORAÇÃO AUTOMÁTICA (estrelas, brilhos)</label>
+    </section>
+  </aside>
+
+  <footer class="status">
+    <span id="status-pos">–</span>
+    <span id="status-zoom"></span>
+    <span class="status__msg" id="status-msg">Desenhe! Salva sozinho neste navegador. Pincel: [ e ] ou a barra (1–10px).</span>
+    <span class="status__keys">B lápis · E borracha · L linha · R retângulo · O elipse · G balde · I conta-gotas · V peças · M espelho · F preencher · espaço+arrastar move · roda = zoom</span>
+  </footer>
+
+  <script type="module" src="../js/studio/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "Pinball Duelo",
+  "description": "Cada um defende o seu buraco com dois flippers. Último de pé vence.",
+  "author": "Wolf's Party",
+  "minPlayers": 1,
+  "maxPlayers": 4,
+  "entry": "index.html",
+  "server": "server.js"
+}

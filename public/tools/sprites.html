@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>Catálogo de sprites — Wolf's Party</title>
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <style>
+    body { margin: 0; padding: 24px; background: var(--night-800); color: var(--cream-100); font-family: monospace; }
+    h2 { color: var(--sun-300); margin: 24px 0 8px; font-size: 14px; letter-spacing: 2px; }
+    .row { display: flex; flex-wrap: wrap; gap: 12px; }
+    figure { margin: 0; text-align: center; font-size: 11px; color: #8a9bd0; }
+    canvas { width: 90px; height: 95px; image-rendering: pixelated; background: #1b2446; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>Catálogo de sprites</h1>
+  <p>Ferramenta para quem cria partes novas em <code>public/js/character/parts.js</code>.</p>
+  <div id="out"></div>
+  <script type="module">
+    import { SLOTS } from '../js/character/model.js';
+    import { drawCharacter } from '../js/character/renderer.js';
+    const base = { skin: 'pessego', eyes: 'normal', hair: 'curto', hairColor: 'castanho', top: 'camiseta', topColor: 'agua', bottom: 'calca', bottomColor: 'jeans', accessory: 'nenhum' };
+    const out = document.getElementById('out');
+    for (const slot of SLOTS) {
+      out.insertAdjacentHTML('beforeend', `<h2>${slot.label}</h2><div class="row"></div>`);
+      const row = out.lastElementChild;
+      for (const opt of slot.options) {
+        const fig = document.createElement('figure');
+        const c = document.createElement('canvas');
+        drawCharacter(c, { ...base, [slot.key]: opt.id });
+        fig.append(c, Object.assign(document.createElement('figcaption'), { textContent: opt.label }));
+        row.append(fig);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+/* ═══════════════════════════════════════ A SALA (fundo, sempre tela cheia)
+   Violeta noturno: parede em painéis, janela com o céu, pôster de gato e
+   varal de lâmpadas. A hora do dia muda a janela e o tom da sala. */
+
+.room { position: fixed; inset: 0; overflow: hidden; }
+.room__layers { position: absolute; inset: 0; pointer-events: none; }
+.room__layers > * { position: absolute; transition: background-color var(--t-sky) steps(6), opacity var(--t-sky) steps(6); }
+
+.room__wall {
+  inset: 0;
+  background: repeating-linear-gradient(90deg, var(--wall) 0 120px, var(--wall-stripe) 120px 128px);
+  transition: background var(--t-sky) steps(6);
+}
+.room__wainscot {
+  left: 0; right: 0; top: 64%; bottom: 14%;
+  background:
+    linear-gradient(var(--wood-light) 0 8px, var(--ink) 8px 12px, transparent 12px),
+    repeating-linear-gradient(90deg, var(--wood) 0 116px, var(--wood-dark) 116px 124px);
+}
+.room__floor {
+  left: 0; right: 0; bottom: 0; height: 14%;
+  border-top: 4px solid var(--ink);
+  background: repeating-linear-gradient(0deg, var(--floor) 0 20px, var(--floor-line) 20px 24px);
+}
+
+/* janela */
+.room__window {
+  left: 2vw;
+  top: 16%;
+  width: clamp(110px, 12vw, 220px);
+  height: 34%;
+  border: 4px solid var(--ink);
+  box-shadow: 0 0 0 10px var(--p-700), 0 0 0 14px var(--ink);
+  overflow: hidden;
+}
+.room__window-cross {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, transparent calc(50% - 4px), var(--p-700) calc(50% - 4px) calc(50% + 4px), transparent calc(50% + 4px)),
+    linear-gradient(transparent calc(55% - 4px), var(--p-700) calc(55% - 4px) calc(55% + 4px), transparent calc(55% + 4px));
+}
+.sky { position: absolute; inset: 0; background: linear-gradient(var(--sky-1) 0 40%, var(--sky-2) 40% 72%, var(--sky-3) 72%); transition: background var(--t-sky) steps(6); }
+.sky__stars { position: absolute; inset: 0; opacity: var(--stars); }
+.sky__stars i { position: absolute; width: 4px; height: 4px; background: var(--cream); animation: twinkle var(--d) var(--delay) infinite steps(2); }
+@keyframes twinkle { 50% { opacity: .25; } }
+.sky__orb { position: absolute; left: 20%; top: 14%; width: 40%; aspect-ratio: 1; }
+.orb { position: absolute; inset: 0; opacity: 0; transform: translateY(30px); transition: opacity var(--t-sky) steps(6), transform var(--t-sky) steps(6); }
+.orb svg { width: 100%; height: 100%; }
+:root[data-time='day'] .orb--day,
+:root[data-time='dusk'] .orb--dusk,
+:root[data-time='night'] .orb--night { opacity: 1; transform: none; }
+:root[data-time='dusk'] .sky__orb { top: 46%; }
+.sky__clouds { position: absolute; inset: 0; opacity: var(--clouds); }
+.cloud { position: absolute; left: 0; width: var(--w); animation: drift var(--dur) var(--delay) linear infinite; }
+.cloud svg { width: 100%; height: auto; }
+@keyframes drift { from { transform: translateX(-120%); } to { transform: translateX(300%); } }
+.sky__roofs {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 22%;
+  background: var(--p-900);
+  -webkit-mask: var(--roofs) bottom left / 120px 100% repeat-x;
+  mask: var(--roofs) bottom left / 120px 100% repeat-x;
+}
+
+/* pôster de gato */
+.room__poster {
+  right: 2vw;
+  top: 20%;
+  width: clamp(90px, 10vw, 170px);
+  aspect-ratio: 4 / 5;
+  border: 4px solid var(--ink);
+  background: var(--p-800);
+  box-shadow: inset 0 0 0 6px var(--p-700);
+  display: grid;
+  place-items: center;
+  padding: 16%;
+}
+.room__poster svg { width: 100%; height: auto; }
+
+/* fliperamas vizinhos */
+.room__neighbor { top: 30%; bottom: 10%; width: 14vw; background: var(--p-800); border: 4px solid var(--ink); }
+.room__neighbor--l { left: -9vw; }
+.room__neighbor--r { right: -9vw; }
+.room__neighbor i { position: absolute; top: 14%; width: 44%; height: 24%; border: 4px solid var(--ink); background: var(--p-950); box-shadow: inset 0 0 0 4px var(--p-600); animation: neighbor 2.4s steps(2) infinite; }
+.room__neighbor--l i { right: 14%; }
+.room__neighbor--r i { left: 14%; }
+@keyframes neighbor { 50% { box-shadow: inset 0 0 0 4px var(--neon); } }
+
+/* varal de lâmpadas */
+.room__lights { left: 0; right: 0; top: 0; height: 16%; }
+.room__lights svg.wire { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.bulb {
+  position: absolute;
+  width: 16px;
+  height: 22px;
+  margin-left: -8px;
+  border: 3px solid var(--ink);
+  background: var(--c);
+  box-shadow: inset -4px -4px 0 rgba(0, 0, 0, .25), inset 3px 3px 0 rgba(255, 255, 255, .45), 0 0 0 8px color-mix(in srgb, var(--c) 28%, transparent);
+  animation: bulb var(--d) infinite steps(2);
+}
+@keyframes bulb { 50% { filter: brightness(.8); } }
+.bulb::before { content: ''; position: absolute; left: 50%; top: -10px; width: 8px; height: 7px; margin-left: -4px; background: var(--ink); }
+
+.room__dim { inset: 0; background: #07031a; opacity: var(--room-dim); }
+
+/* interruptor de dia/noite */
+.time-toggle {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 5;
+  width: 52px;
+  height: 52px;
+  padding: 8px;
+  background: var(--p-800);
+  border: 4px solid var(--ink);
+  box-shadow: 0 0 0 3px var(--p-500), 4px 4px 0 3px var(--ink);
+}
+.time-toggle svg { width: 100%; height: 100%; }
+.time-toggle:active { transform: translate(3px, 3px); }

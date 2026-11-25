@@ -1,0 +1,249 @@
+/* ═══════════════════════════════════════ FLIPERAMA (palco 1280×1000)
+   Roxo com filetes neon, letreiro grande, tela arredondada e painel
+   com os controles; a alavanca fica de pé no canto direito do painel. */
+
+/* casca (SVG) */
+.shell { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.shell polygon, .shell rect { stroke: var(--ink); stroke-width: 4; }
+.shell__side       { fill: var(--p-700); }
+.shell__front      { fill: var(--p-800); }
+.shell__marquee    { fill: var(--p-900); stroke: var(--p-600) !important; }
+.shell__ledge      { fill: var(--p-600); }
+.shell__bezel      { fill: var(--p-950); }
+.shell__glow       { fill: none; stroke: var(--p-500) !important; stroke-width: 6 !important; filter: drop-shadow(0 0 8px rgba(139, 100, 255, .7)); }
+.shell__deck       { fill: var(--p-800); }
+.shell__deck-front { fill: var(--p-900); }
+.neon {
+  fill: none;
+  stroke: var(--neon);
+  stroke-width: 6;
+  stroke-linejoin: miter;
+  filter: drop-shadow(0 0 6px rgba(255, 79, 216, .85));
+}
+.neon--soft { stroke: var(--p-400); stroke-width: 4; filter: drop-shadow(0 0 4px rgba(139, 100, 255, .7)); }
+
+/* ───────────────────────── letreiro */
+.marquee { position: absolute; left: 196px; top: 0; width: 888px; height: 190px; overflow: hidden; }
+.marquee__deco { position: absolute; inset: 0; pointer-events: none; }
+.marquee__deco > * { position: absolute; }
+.marquee__deco svg { width: 100%; height: auto; }
+.deco-star { width: 46px; filter: var(--outline); animation: star-bob 1.6s steps(2) infinite; }
+.deco-sparkle { width: 15px; opacity: .7; animation: sparkle var(--d, 2s) var(--delay, 0s) infinite steps(2); }
+@keyframes star-bob { 50% { transform: translateY(-4px) rotate(8deg); } }
+@keyframes sparkle { 50% { opacity: .15; } }
+
+.title {
+  position: absolute;
+  inset: 8px 0 0;
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 4px;
+  font-family: var(--font-display);
+  line-height: 1;
+}
+.title__row { display: flex; gap: 0; white-space: nowrap; }
+.title__row--top { font-size: 54px; margin-top: 12px; }
+.title__row--bottom { font-size: 60px; }
+.title__gap { width: .5em; }
+.letter {
+  display: inline-block;
+  padding: 0 1px;
+  color: transparent;
+  background: var(--fill);
+  -webkit-background-clip: text;
+  background-clip: text;
+  transform: translateY(var(--y)) rotate(var(--r));
+  filter: drop-shadow(0 6px 0 var(--depth)) var(--outline);
+}
+.letter--pink  { --fill: linear-gradient(#ffc2e6 0 22%, #ff6fc0 22% 58%, #e0309a 58%); --depth: #8a1a6a; }
+.letter--cyan  { --fill: linear-gradient(#c8fbff 0 22%, #2ee6ff 22% 58%, #1a8fe0 58%); --depth: #134a9a; }
+.letter--lilac { --fill: linear-gradient(#ffffff 0 22%, #e2d6ff 22% 58%, #b89cff 58%); --depth: #5a3aa8; }
+.title__arc { position: absolute; left: 50%; top: 150px; width: 560px; margin-left: -280px; overflow: visible; }
+.title__arc path { fill: none; stroke-linecap: square; }
+
+/* ───────────────────────── tela */
+.screen,
+.screen__glass { position: absolute; left: 222px; top: 234px; width: 836px; height: 514px; border-radius: 34px; }
+.screen {
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 30% 18% at 82% 14%, rgba(139, 100, 255, .16), transparent 70%),
+    radial-gradient(ellipse 40% 16% at 25% 96%, rgba(139, 100, 255, .14), transparent 70%),
+    var(--crt-bg);
+}
+.screen__glass {
+  pointer-events: none;
+  background:
+    linear-gradient(115deg, transparent 0 64%, rgba(255, 255, 255, .035) 64% 72%, transparent 72%),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, .12) 0 2px, transparent 2px 4px);
+  box-shadow: inset 0 0 50px rgba(8, 3, 24, .7);
+}
+
+/* ───────────────────────── painel */
+.deck { position: absolute; left: 0; top: 0; width: 1280px; height: 1000px; pointer-events: none; }
+.deck > * { pointer-events: auto; }
+.deck__deco { position: absolute; pointer-events: none !important; }
+.deck__deco svg { width: 100%; height: auto; }
+
+/* teclado deitado no painel */
+.keyboard {
+  position: absolute;
+  left: 470px;
+  top: 790px;
+  width: 380px;
+  display: grid;
+  grid-template-columns: repeat(10, 34px);
+  grid-auto-rows: 26px;
+  gap: 5px 4px;
+  transform: perspective(600px) rotateX(28deg);
+  transform-origin: 50% 100%;
+}
+.key {
+  border: 3px solid var(--ink);
+  background: var(--p-200);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1;
+  box-shadow: inset -4px -4px 0 var(--p-300), 0 4px 0 var(--ink);
+  display: grid;
+  place-items: center;
+}
+.key:hover { background: #ece4ff; }
+.key.is-pressed, .key:active { transform: translateY(4px); box-shadow: inset 3px 3px 0 var(--p-300); }
+.key--erase { background: var(--pink-light); box-shadow: inset -4px -4px 0 var(--pink), 0 4px 0 var(--ink); }
+.key--space { grid-column: span 3; background: var(--cyan); box-shadow: inset -4px -4px 0 var(--cyan-dark), 0 4px 0 var(--ink); font-size: 11px; }
+
+/* joystick */
+.joy { position: absolute; left: 318px; top: 772px; width: 130px; height: 132px; cursor: grab; touch-action: none; }
+.joy.is-grabbed { cursor: grabbing; }
+.joy__base { position: absolute; left: 20px; bottom: 6px; width: 90px; }
+.joy__base svg, .joy__ball svg { width: 100%; height: auto; }
+.joy__lever { position: absolute; left: 65px; bottom: 24px; width: 0; height: 0; transform: rotate(calc(var(--jx, 0) * 24deg)); transition: transform 120ms steps(3); }
+.joy.is-grabbed .joy__lever, .joy.is-grabbed .joy__rod, .joy.is-grabbed .joy__ball { transition: none; }
+.joy__rod {
+  position: absolute; left: -7px; bottom: 0; width: 14px;
+  height: calc(62px - var(--jy, 0) * 18px);
+  border: 3px solid var(--ink);
+  background: linear-gradient(90deg, #e9e4f5 0 50%, #9a90b8 50%);
+  transition: height 120ms steps(3);
+}
+.joy__ball { position: absolute; left: -24px; bottom: calc(48px - var(--jy, 0) * 18px); width: 48px; transition: bottom 120ms steps(3); }
+
+/* botões A/B */
+.abtn {
+  position: absolute;
+  width: 84px;
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--p-200);
+  filter: drop-shadow(2px 2px 0 var(--ink));
+}
+.abtn__well { position: relative; width: 76px; height: 40px; }
+.abtn__ring, .abtn__cap { position: absolute; left: 0; width: 100%; }
+.abtn__ring { top: 10px; }
+.abtn__cap { top: 0; transition: transform var(--t-fast) steps(2); }
+.abtn svg { width: 100%; height: auto; }
+.abtn.is-pressed .abtn__cap, .abtn:active .abtn__cap { transform: translateY(8px); }
+.abtn--b { left: 876px; top: 822px; }
+.abtn--a { left: 966px; top: 800px; }
+
+/* som */
+.sound-toggle {
+  position: absolute; left: 150px; top: 944px;
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-ui); font-weight: 700; font-size: 12px; color: var(--p-300);
+}
+.sound-toggle i { width: 16px; height: 16px; border: 3px solid var(--ink); background: var(--green); box-shadow: 0 0 8px var(--green); }
+.sound-toggle[aria-pressed='true'] i { background: var(--p-700); box-shadow: none; }
+
+/* ───────────────────────── alavanca de pé no painel (pivô em left/top) */
+.lever { position: absolute; left: 1120px; top: 870px; width: 0; height: 0; --f: 1; --kx: 30px; --ky: -213px; --ks: 1; }
+.lever__base {
+  position: absolute;
+  left: -54px; top: -22px; width: 108px; height: 48px;
+  background: var(--p-950);
+  clip-path: polygon(14% 0, 86% 0, 100% 100%, 0 100%);
+  box-shadow: inset 0 6px 0 #2a2050;
+}
+.lever__base::before, .lever__base::after {
+  content: ''; position: absolute; top: 20px; width: 8px; height: 8px; background: #4a3f6e;
+}
+.lever__base::before { left: 14px; }
+.lever__base::after { right: 14px; }
+.lever__rod {
+  position: absolute;
+  left: -10px; bottom: 0; width: 20px; height: 215px;
+  border: 4px solid var(--ink);
+  background: linear-gradient(90deg, #ffffff 0 35%, #c9c2dd 35% 70%, #8c84a8 70%);
+  transform-origin: 50% 100%;
+  transform: rotate(8deg) scaleY(var(--f));
+  cursor: grab;
+  touch-action: none;
+}
+.lever__knob {
+  position: absolute;
+  left: calc(var(--kx) - 44px);
+  top: calc(var(--ky) - 44px);
+  width: 88px;
+  height: 88px;
+  transform: scale(var(--ks));
+  cursor: grab;
+  touch-action: none;
+  outline: none;
+  z-index: 2;
+}
+.lever__knob svg { width: 100%; height: 100%; }
+.lever.is-grabbed .lever__knob, .lever.is-grabbed .lever__rod { cursor: grabbing; }
+.lever__knob:focus-visible { outline: 3px dashed var(--gold); outline-offset: 2px; }
+
+.rig.is-shaking { animation: shake 220ms steps(2); }
+@keyframes shake {
+  33% { transform: var(--rig-transform) translate(-3px, 2px); }
+  66% { transform: var(--rig-transform) translate(3px, -1px); }
+}
+
+/* ───────────────────────── gabinete desenhado no Estúdio */
+.rig--custom .shell { display: none; }
+.cshell {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1280px;
+  height: 1000px;
+  pointer-events: none;
+  image-rendering: pixelated;
+}
+.cshell--glow { filter: blur(7px) saturate(1.4); opacity: .9; }
+.rig--no-deco .marquee__deco,
+.rig--no-deco .deck__deco { display: none; }
+
+/* atalho para o Estúdio (canto da sala) */
+.studio-link {
+  position: absolute;
+  top: 14px;
+  right: 80px;
+  z-index: 5;
+  height: 52px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--p-800);
+  border: 4px solid var(--ink);
+  box-shadow: 0 0 0 3px var(--p-500), 4px 4px 0 3px var(--ink);
+  color: var(--p-200);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 13px;
+  text-decoration: none;
+}
+.studio-link:hover { color: #fff; }
+.studio-link svg { width: 22px; height: 22px; }

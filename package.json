@@ -1,0 +1,19 @@
+{
+  "name": "wolfs-party",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Suíte de party games multiplayer, modular: coloque um jogo em /games e ele aparece no menu.",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "tunnel": "cloudflared tunnel --url http://localhost:3000"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1"
+  }
+}

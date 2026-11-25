@@ -1,0 +1,244 @@
+/* ═══════════════════════════════════════ FLIPERAMA (palco 1280×1000)
+   Roxo com filetes neon, letreiro grande, tela arredondada e painel
+   com os controles; a alavanca fica de pé no canto direito do painel. */
+
+/* casca (canvas 320×250 em pixel art pura) */
+.shell { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+/* ───────────────────────── letreiro */
+.marquee {
+  position: absolute;
+  left: 196px;
+  top: 0;
+  width: 888px;
+  height: 190px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 64% 60% at 50% 45%, rgba(139, 100, 255, .18), transparent 72%),
+    radial-gradient(ellipse 20% 45% at 10% 55%, rgba(139, 100, 255, .14), transparent 75%),
+    radial-gradient(ellipse 20% 45% at 90% 55%, rgba(139, 100, 255, .14), transparent 75%);
+}
+.marquee__deco { position: absolute; inset: 0; pointer-events: none; }
+.marquee__deco > * { position: absolute; }
+.marquee__deco svg { width: 100%; height: auto; }
+.deco-cat { width: 124px; filter: drop-shadow(0 0 8px rgba(139, 100, 255, .75)); opacity: .95; }
+.deco-cat--l { transform: rotate(-5deg); }
+.deco-cat--r { transform: rotate(5deg); }
+.deco-star { width: 48px; filter: drop-shadow(0 0 6px rgba(255, 196, 61, .45)); animation: star-bob 1.6s steps(2) infinite; }
+.deco-sparkle { width: 14px; opacity: .75; animation: sparkle var(--d, 2s) var(--delay, 0s) infinite steps(2); }
+@keyframes star-bob { 50% { transform: translateY(-4px) rotate(8deg); } }
+@keyframes sparkle { 50% { opacity: .15; } }
+
+.title {
+  position: absolute;
+  inset: 8px 0 0;
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 4px;
+  font-family: var(--font-display);
+  line-height: 1;
+}
+.title__row { display: flex; gap: 0; white-space: nowrap; }
+.title__row--top { font-size: 54px; margin-top: 12px; }
+.title__row--bottom { font-size: 60px; }
+.title__gap { width: .5em; }
+.letter {
+  display: inline-block;
+  padding: 0 1px;
+  color: transparent;
+  background: var(--fill);
+  -webkit-background-clip: text;
+  background-clip: text;
+  transform: translateY(var(--y)) rotate(var(--r));
+  filter: drop-shadow(0 6px 0 var(--depth)) var(--outline);
+}
+.letter--pink  { --fill: linear-gradient(#ffc2e6 0 22%, #ff6fc0 22% 58%, #e0309a 58%); --depth: #8a1a6a; }
+.letter--cyan  { --fill: linear-gradient(#c8fbff 0 22%, #2ee6ff 22% 58%, #1a8fe0 58%); --depth: #134a9a; }
+.letter--lilac { --fill: linear-gradient(#ffffff 0 22%, #e2d6ff 22% 58%, #b89cff 58%); --depth: #5a3aa8; }
+.title__arc { position: absolute; left: 50%; top: 140px; width: 520px; height: 42px; margin-left: -260px; overflow: visible; filter: drop-shadow(0 3px 0 var(--ink)); }
+
+/* ───────────────────────── tela */
+.screen,
+.screen__glass {
+  position: absolute;
+  left: 224px;
+  top: 232px;
+  width: 832px;
+  height: 516px;
+  clip-path: polygon(
+    24px 0, calc(100% - 24px) 0,
+    calc(100% - 24px) 4px, calc(100% - 12px) 4px,
+    calc(100% - 12px) 12px, calc(100% - 4px) 12px,
+    calc(100% - 4px) 24px, 100% 24px,
+    100% calc(100% - 24px), calc(100% - 4px) calc(100% - 24px),
+    calc(100% - 4px) calc(100% - 12px), calc(100% - 12px) calc(100% - 12px),
+    calc(100% - 12px) calc(100% - 4px), calc(100% - 24px) calc(100% - 4px),
+    calc(100% - 24px) 100%, 24px 100%,
+    24px calc(100% - 4px), 12px calc(100% - 4px),
+    12px calc(100% - 12px), 4px calc(100% - 12px),
+    4px calc(100% - 24px), 0 calc(100% - 24px),
+    0 24px, 4px 24px,
+    4px 12px, 12px 12px,
+    12px 4px, 24px 4px
+  );
+}
+.screen {
+  overflow: hidden;
+  background: var(--crt-bg);
+}
+.screen__glass {
+  pointer-events: none;
+  background:
+    linear-gradient(115deg, transparent 0 64%, rgba(255, 255, 255, .03) 64% 72%, transparent 72%),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, .12) 0 2px, transparent 2px 4px);
+  box-shadow: inset 0 0 44px rgba(8, 3, 24, .78), inset 0 4px 0 rgba(139, 100, 255, .14);
+}
+
+/* ───────────────────────── painel */
+.deck { position: absolute; left: 0; top: 0; width: 1280px; height: 1000px; pointer-events: none; }
+.deck > * { pointer-events: auto; }
+.deck__deco { position: absolute; pointer-events: none !important; }
+.deck__deco svg { width: 100%; height: auto; }
+
+/* teclado deitado no painel */
+.keyboard {
+  position: absolute;
+  left: 470px;
+  top: 790px;
+  width: 380px;
+  display: grid;
+  grid-template-columns: repeat(10, 34px);
+  grid-auto-rows: 26px;
+  gap: 5px 4px;
+  transform: perspective(600px) rotateX(28deg);
+  transform-origin: 50% 100%;
+}
+.key {
+  border: 3px solid var(--ink);
+  background: var(--p-200);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1;
+  box-shadow: inset -4px -4px 0 var(--p-300), 0 4px 0 var(--ink);
+  display: grid;
+  place-items: center;
+}
+.key:hover { background: #ece4ff; }
+.key.is-pressed, .key:active { transform: translateY(4px); box-shadow: inset 3px 3px 0 var(--p-300); }
+.key--erase { background: var(--pink-light); box-shadow: inset -4px -4px 0 var(--pink), 0 4px 0 var(--ink); }
+.key--space { grid-column: span 3; background: var(--cyan); box-shadow: inset -4px -4px 0 var(--cyan-dark), 0 4px 0 var(--ink); font-size: 11px; }
+
+/* joystick */
+.joy { position: absolute; left: 318px; top: 772px; width: 130px; height: 132px; cursor: grab; touch-action: none; }
+.joy.is-grabbed { cursor: grabbing; }
+.joy__base { position: absolute; left: 14px; bottom: 4px; width: 102px; }
+.joy__base svg, .joy__ball svg { width: 100%; height: auto; }
+.joy__lever { position: absolute; left: 65px; bottom: 26px; width: 0; height: 0; transform: rotate(calc(var(--jx, 0) * 24deg)); transition: transform 120ms steps(3); }
+.joy.is-grabbed .joy__lever, .joy.is-grabbed .joy__rod, .joy.is-grabbed .joy__ball { transition: none; }
+.joy__rod {
+  position: absolute; left: -7px; bottom: 0; width: 14px;
+  height: calc(62px - var(--jy, 0) * 18px);
+  border: 3px solid var(--ink);
+  background: linear-gradient(90deg, #ffffff 0 32%, #d8d0ec 32% 65%, #8a7fa8 65%);
+  transition: height 120ms steps(3);
+}
+.joy__ball { position: absolute; left: -24px; bottom: calc(48px - var(--jy, 0) * 18px); width: 48px; filter: drop-shadow(0 4px 6px rgba(255, 59, 78, .35)); transition: bottom 120ms steps(3); }
+
+/* botões A/B (com brilho refletido no painel) */
+.abtn {
+  position: absolute;
+  width: 88px;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--p-200);
+  filter: drop-shadow(2px 2px 0 var(--ink));
+}
+.abtn__well { position: relative; width: 80px; height: 48px; }
+.abtn__well::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: -10px;
+  height: 18px;
+  background: var(--glow);
+  opacity: .35;
+  filter: blur(6px);
+  pointer-events: none;
+}
+.abtn__ring, .abtn__cap { position: absolute; left: 0; width: 100%; }
+.abtn__ring { top: 14px; }
+.abtn__cap { top: 0; transition: transform var(--t-fast) steps(2); }
+.abtn svg { width: 100%; height: auto; }
+.abtn.is-pressed .abtn__cap, .abtn:active .abtn__cap { transform: translateY(7px); }
+.abtn--b { left: 874px; top: 816px; --glow: var(--cyan); }
+.abtn--a { left: 966px; top: 794px; --glow: var(--pink); }
+
+/* som */
+.sound-toggle {
+  position: absolute; left: 150px; top: 944px;
+  display: flex; align-items: center; gap: 10px;
+  padding: 5px 10px 5px 7px;
+  background: var(--p-850);
+  border: 3px solid var(--ink);
+  box-shadow: inset 0 2px 0 var(--p-600), 3px 3px 0 var(--ink);
+  font-family: var(--font-ui); font-weight: 700; font-size: 12px; color: var(--p-200);
+}
+.sound-toggle:hover { background: var(--p-800); }
+.sound-toggle:active { transform: translate(2px, 2px); box-shadow: inset 0 2px 0 var(--p-600); }
+.sound-toggle i {
+  width: 16px; height: 16px;
+  border: 3px solid var(--ink);
+  background: var(--green);
+  box-shadow: inset 2px 2px 0 #b8ffd2, 0 0 8px var(--green);
+}
+.sound-toggle[aria-pressed='true'] i { background: var(--p-700); box-shadow: inset 2px 2px 0 var(--p-600); }
+
+/* ───────────────────────── alavanca de pé no painel (pivô em left/top) */
+.lever { position: absolute; left: 1120px; top: 870px; width: 0; height: 0; --f: 1; --kx: 30px; --ky: -213px; --ks: 1; }
+.lever__base {
+  position: absolute;
+  left: -58px; top: -30px; width: 116px; height: 64px;
+}
+.lever__base svg { width: 100%; height: 100%; }
+.lever__rod {
+  position: absolute;
+  left: -10px; bottom: 0; width: 20px; height: 215px;
+  border: 4px solid var(--ink);
+  background: linear-gradient(90deg, #ffffff 0 32%, #d4cce8 32% 68%, #857ca4 68%);
+  transform-origin: 50% 100%;
+  transform: rotate(8deg) scaleY(var(--f));
+  cursor: grab;
+  touch-action: none;
+}
+.lever__knob {
+  position: absolute;
+  left: calc(var(--kx) - 44px);
+  top: calc(var(--ky) - 44px);
+  width: 88px;
+  height: 88px;
+  transform: scale(var(--ks));
+  filter: drop-shadow(0 6px 10px rgba(255, 56, 75, .35));
+  cursor: grab;
+  touch-action: none;
+  outline: none;
+  z-index: 2;
+}
+.lever__knob svg { width: 100%; height: 100%; }
+.lever.is-grabbed .lever__knob, .lever.is-grabbed .lever__rod { cursor: grabbing; }
+.lever__knob:focus-visible { outline: 3px dashed var(--gold); outline-offset: 2px; }
+
+.rig.is-shaking { animation: shake 220ms steps(2); }
+@keyframes shake {
+  33% { transform: var(--rig-transform) translate(-3px, 2px); }
+  66% { transform: var(--rig-transform) translate(3px, -1px); }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Quiz Relâmpago",
+  "description": "Jogo de exemplo — copie esta pasta para começar o seu.",
+  "author": "Wolf's Party",
+  "minPlayers": 2,
+  "maxPlayers": 8,
+  "entry": "index.html"
+}

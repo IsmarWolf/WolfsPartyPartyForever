@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wolf's Party</title>
+  <meta name="theme-color" content="#170d36" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Crect width='8' height='8' fill='%23170d36'/%3E%3Crect x='1' y='1' width='6' height='4' fill='%23ff4fd8'/%3E%3Crect x='2' y='2' width='4' height='2' fill='%232ee6ff'/%3E%3Crect x='2' y='6' width='4' height='1' fill='%23ffc43d'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Pixelify+Sans:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/room.css" />
+  <link rel="stylesheet" href="css/cabinet.css" />
+  <link rel="stylesheet" href="css/creator.css" />
+  <link rel="stylesheet" href="css/draw.css" />
+  <link rel="stylesheet" href="css/lounge.css" />
+</head>
+<body>
+  <main class="room" id="room">
+    <!-- a sala: parede, janela com céu, pôster, varal de luzes -->
+    <div class="room__layers" id="room-layers" aria-hidden="true">
+      <div class="room__wall"></div>
+      <div class="room__window">
+        <div class="sky">
+          <div class="sky__stars"></div>
+          <div class="sky__orb"></div>
+          <div class="sky__clouds"></div>
+          <div class="sky__roofs"></div>
+        </div>
+        <div class="room__window-cross"></div>
+      </div>
+      <div class="room__poster"></div>
+      <div class="room__neighbor room__neighbor--l"><i></i></div>
+      <div class="room__neighbor room__neighbor--r"><i></i></div>
+      <div class="room__wainscot"></div>
+      <div class="room__floor"></div>
+      <div class="room__dim"></div>
+      <div class="room__lights"></div>
+    </div>
+
+    <button class="time-toggle" id="time-toggle" type="button"></button>
+
+    <!-- palco fixo (1280×1000), escalado para caber -->
+    <div class="rig" id="rig">
+      <canvas class="shell pixel" id="shell" width="320" height="250" aria-hidden="true"></canvas>
+
+      <header class="marquee">
+        <div class="marquee__deco" id="marquee-deco"></div>
+        <h1 class="title" id="title" aria-label="Party Party Forever"></h1>
+      </header>
+
+      <div class="screen" id="screen" aria-live="polite"></div>
+      <div class="screen__glass" aria-hidden="true"></div>
+
+      <div class="deck" id="deck" aria-label="Controles"></div>
+
+      <div class="lever" id="lever">
+        <div class="lever__base"></div>
+        <div class="lever__rod"></div>
+        <div class="lever__knob" role="slider" tabindex="0" aria-label="Alavanca: puxe para baixo para sortear" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+      </div>
+
+      <button class="sound-toggle" id="sound-toggle" type="button"><i></i><span>SOM</span></button>
+    </div>
+
+    <div class="flash" id="flash" aria-hidden="true"></div>
+  </main>
+
+  <section class="lounge" id="lounge" hidden></section>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+/*
+ * Tokens de design — a ÚNICA fonte de cores, fontes e medidas.
+ * Direção: fliperama roxo com filetes neon (rosa/magenta), acentos ciano
+ * e dourado; sala noturna em violeta. Pixel art com contorno escuro.
+ */
+:root {
+  --ink:        #120827;
+
+  /* roxos (do mais escuro ao mais claro) */
+  --p-950: #0f0824;
+  --p-900: #170d36;
+  --p-850: #1e1244;
+  --p-800: #261752;
+  --p-700: #34206e;
+  --p-600: #4a2f96;
+  --p-500: #6a45d0;
+  --p-400: #8b64ff;
+  --p-300: #b89cff;
+  --p-200: #d9caff;
+
+  /* neon e acentos */
+  --neon:        #ff4fd8;
+  --neon-light:  #ffb3f0;
+  --pink:        #ff4fa8;
+  --pink-light:  #ff9ad2;
+  --cyan:        #2ee6ff;
+  --cyan-dark:   #1a8fe0;
+  --gold:        #ffc43d;
+  --gold-dark:   #e0861c;
+  --gold-light:  #ffe58f;
+  --red:         #ff4747;
+  --red-dark:    #c4213a;
+  --orange:      #ff9a3c;
+  --green:       #3fe07c;
+  --salmon:      #ff8a6a;
+  --cream:       #f6ead2;
+  --cream-dark:  #d9c6a3;
+
+  /* tela */
+  --crt-bg:     #1b1042;
+  --crt-panel:  #2a1a5e;
+  --crt-text:   var(--cream);
+  --crt-dim:    var(--p-300);
+
+  /* tipografia */
+  --font-display: 'Press Start 2P', ui-monospace, monospace;
+  --font-ui:      'Silkscreen', 'Pixelify Sans', ui-monospace, monospace;
+
+  --outline: drop-shadow(3px 0 0 var(--ink)) drop-shadow(-3px 0 0 var(--ink)) drop-shadow(0 3px 0 var(--ink)) drop-shadow(0 -3px 0 var(--ink));
+  --t-fast: 90ms;
+  --t-sky:  900ms;
+}
+
+/* ───────────────────────── hora do dia (janela + luz da sala) */
+:root,
+:root[data-time='night'] {
+  --sky-1: #120b2e; --sky-2: #1b1342; --sky-3: #261a58;
+  --cloud: #3a2a78; --cloud-shade: #2c1f62;
+  --wall: #261848; --wall-stripe: #211542;
+  --wood: #1d1240; --wood-dark: #160d33; --wood-light: #2e1d5c;
+  --floor: #170e33; --floor-line: #120a2a;
+  --room-dim: .15;
+  --stars: 1; --clouds: .4;
+}
+
+:root[data-time='dusk'] {
+  --sky-1: #3a2a7a; --sky-2: #a8458f; --sky-3: #ff8a6a;
+  --cloud: #ff9ad2; --cloud-shade: #c45a9a;
+  --wall: #3a2268; --wall-stripe: #331e5e;
+  --wood: #2a1855; --wood-dark: #21134a; --wood-light: #3b2470;
+  --floor: #21134a; --floor-line: #1a0f3c;
+  --room-dim: .05;
+  --stars: .3; --clouds: .9;
+}
+
+:root[data-time='day'] {
+  --sky-1: #5aa8ff; --sky-2: #7cc0ff; --sky-3: #a8d8ff;
+  --cloud: #ffffff; --cloud-shade: #cfe4ff;
+  --wall: #5a3fa0; --wall-stripe: #533a95;
+  --wood: #3e2780; --wood-dark: #342070; --wood-light: #4e3296;
+  --floor: #342070; --floor-line: #2b1a60;
+  --room-dim: 0;
+  --stars: 0; --clouds: 1;
+}

@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Quiz Relâmpago</title>
+  <link rel="stylesheet" href="/games/_shared/theme.css" />
+</head>
+<body style="display:grid;place-items:center;align-content:center;gap:16px">
+  <p class="px-box" style="padding:16px;margin:0">Jogo de exemplo. Substitua este arquivo pelo seu jogo.</p>
+  <button type="button" class="px-btn">TERMINAR JOGO</button>
+  <script type="module">
+    // jogo sem server.js: a própria página avisa o lounge que acabou
+    import { joinGame } from '/lounge/game-api.js';
+    const game = joinGame();
+    document.querySelector('button').addEventListener('click', () => game.end());
+  </script>
+</body>
+</html>

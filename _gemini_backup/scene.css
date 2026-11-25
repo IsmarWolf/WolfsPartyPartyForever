@@ -1,0 +1,97 @@
+/* ═══════════════════════════════════════ CENÁRIO (dia / entardecer / noite)
+   Céu em faixas chapadas, morros em degraus e chão — sem degradês suaves. */
+
+.scene { position: fixed; inset: 0; overflow: hidden; --ground-y: 85vh; }
+.scene__layers { position: absolute; inset: 0; pointer-events: none; }
+.scene__layers > * { position: absolute; left: 0; right: 0; }
+
+.scene__sky {
+  top: 0;
+  height: var(--ground-y);
+  background: linear-gradient(
+    var(--sky-1) 0 30%, var(--sky-2) 30% 52%, var(--sky-3) 52% 70%, var(--sky-4) 70% 100%);
+  transition: background var(--t-sky) steps(6);
+}
+
+/* estrelas */
+.scene__stars { top: 0; height: 60%; opacity: var(--stars); transition: opacity var(--t-sky) steps(6); }
+.scene__stars i {
+  position: absolute;
+  width: calc(var(--s, 1) * 4px);
+  height: calc(var(--s, 1) * 4px);
+  background: var(--white);
+  animation: twinkle var(--d) var(--delay) infinite steps(2);
+}
+@keyframes twinkle { 50% { opacity: .2; } }
+
+/* astros: só o da hora aparece */
+.scene__orb { top: 7%; left: 9%; right: auto; width: 120px; height: 120px; }
+.orb { position: absolute; inset: 0; opacity: 0; transform: translateY(40px); transition: opacity var(--t-sky) steps(6), transform var(--t-sky) steps(6); }
+.orb svg { width: 100%; height: 100%; }
+:root[data-time='day'] .orb--day,
+:root[data-time='dusk'] .orb--dusk,
+:root[data-time='night'] .orb--night { opacity: 1; transform: none; }
+:root[data-time='dusk'] .scene__orb { top: 34%; }
+
+/* nuvens atravessando devagar */
+.scene__clouds { top: 0; height: 55%; opacity: var(--clouds); transition: opacity var(--t-sky) steps(6); }
+.cloud {
+  position: absolute;
+  left: 0;
+  width: var(--w);
+  animation: drift var(--dur) var(--delay) linear infinite;
+}
+.cloud svg { width: 100%; height: auto; }
+@keyframes drift { from { transform: translateX(-30vw); } to { transform: translateX(130vw); } }
+
+/* morros em degraus (máscara gerada em JS, cor vem do tema) */
+.scene__hills {
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  -webkit-mask-position: bottom left;
+  mask-position: bottom left;
+  transition: background-color var(--t-sky) steps(6);
+}
+.scene__hills--far {
+  bottom: calc(100% - var(--ground-y));
+  height: 128px;
+  background: var(--hill-far);
+  -webkit-mask-image: var(--hills-far);
+  mask-image: var(--hills-far);
+  -webkit-mask-size: 384px 128px;
+  mask-size: 384px 128px;
+}
+.scene__hills--near {
+  bottom: calc(100% - var(--ground-y));
+  height: 72px;
+  background: var(--hill-near);
+  -webkit-mask-image: var(--hills-near);
+  mask-image: var(--hills-near);
+  -webkit-mask-size: 384px 72px;
+  mask-size: 384px 72px;
+}
+.scene__ground {
+  top: var(--ground-y);
+  bottom: 0;
+  background:
+    linear-gradient(var(--hill-near) 0 8px, var(--ink) 8px 12px, var(--ground) 12px 36px, var(--ground-deep) 36px);
+  transition: background var(--t-sky) steps(6);
+}
+
+/* botão de dia/noite */
+.time-toggle {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 5;
+  width: 56px;
+  height: 56px;
+  padding: 8px;
+  background: var(--navy-700);
+  border: 4px solid var(--ink);
+  box-shadow: var(--shadow);
+  transition: transform var(--t-fast);
+}
+.time-toggle svg { width: 100%; height: 100%; }
+.time-toggle:hover { background: var(--navy-500); }
+.time-toggle:active { transform: translate(4px, 4px); box-shadow: none; }

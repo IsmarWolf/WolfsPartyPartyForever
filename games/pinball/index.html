@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pinball Duelo</title>
+  <link rel="stylesheet" href="/games/_shared/theme.css" />
+  <style>
+    html, body { overflow: hidden; touch-action: none; user-select: none; background: var(--ink); }
+    body { display: grid; place-items: center; }
+    .board { position: relative; width: min(92vmin, 960px); aspect-ratio: 1; border: 4px solid var(--ink); box-shadow: 0 0 0 4px var(--slate), 8px 8px 0 4px var(--ink); }
+    canvas { width: 100%; height: 100%; display: block; }
+    .tag {
+      position: absolute; translate: -50% -50%; display: flex; gap: 8px; align-items: center;
+      padding: 4px 8px; border: 3px solid var(--ink); background: var(--d); color: var(--c);
+      font: 700 clamp(9px, 1.5vmin, 15px) var(--font-ui); letter-spacing: 1px; white-space: nowrap;
+      box-shadow: 3px 3px 0 var(--ink); pointer-events: none;
+    }
+    .tag i { font-style: normal; color: var(--salmon); }
+    .tag b { font: clamp(7px, 1.1vmin, 11px) var(--font-display); color: var(--white); }
+    .tag.is-out { opacity: .45; text-decoration: line-through; }
+    .tag.is-me { outline: 3px solid var(--white); }
+    .msg {
+      position: absolute; left: 50%; top: 50%; translate: -50% -50%; text-align: center;
+      font: clamp(14px, 3.4vmin, 34px) var(--font-display); color: var(--orange);
+      text-shadow: 4px 4px 0 var(--ink); pointer-events: none; white-space: nowrap;
+    }
+    .msg small { display: block; margin-top: 12px; font-size: .45em; color: var(--white); }
+    .hint { position: fixed; bottom: 8px; left: 50%; translate: -50% 0; margin: 0; font: 700 12px var(--font-ui); letter-spacing: 1px; color: var(--steel); white-space: nowrap; }
+  </style>
+</head>
+<body>
+  <div class="board">
+    <canvas width="320" height="320"></canvas>
+    <div class="tags"></div>
+    <div class="msg"></div>
+  </div>
+  <p class="hint">← → / A D / TOQUE NA ESQUERDA OU DIREITA: FLIPPERS</p>
+  <script type="module" src="client.js"></script>
+</body>
+</html>
